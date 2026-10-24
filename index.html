@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Home | My Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0b1f;
+            --bg2: #141230;
+            --panel: #1a1740;
+            --text: #f2f1ff;
+            --muted: #a9a8cc;
+            --violet: #8b6cff;
+            --violet-d: #6d4ef0;
+            --sky: #6cc7ff;
+            --border: #2c2862;
+            --grad: linear-gradient(110deg, var(--violet), var(--sky));
+            --shadow: 0 18px 50px rgba(20, 10, 80, .45);
+        }
+
+        body.light {
+            --bg: #f5f4ff;
+            --bg2: #eceaff;
+            --panel: #ffffff;
+            --text: #1b1840;
+            --muted: #5d5b85;
+            --violet: #6d4ef0;
+            --violet-d: #5a3ad8;
+            --sky: #1f9be0;
+            --border: #dcd8f7;
+            --shadow: 0 18px 40px rgba(90, 70, 200, .14);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px
+        }
+
+        body {
+            font: 16px/1.7 "Plus Jakarta Sans", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background .3s, color .3s;
+            overflow-x: hidden
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button {
+            font: inherit
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--sky);
+            outline-offset: 3px;
+            border-radius: 6px
+        }
+
+        /* background orbs + cursor glow */
+        .bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .35;
+            animation: float 16s ease-in-out infinite
+        }
+
+        .orb.a {
+            width: 420px;
+            height: 420px;
+            background: var(--violet);
+            top: -120px;
+            left: -100px
+        }
+
+        .orb.b {
+            width: 380px;
+            height: 380px;
+            background: var(--sky);
+            bottom: -120px;
+            right: -80px;
+            animation-delay: -8s;
+            opacity: .28
+        }
+
+        body.light .orb {
+            opacity: .22
+        }
+
+        @keyframes float {
+            50% {
+                transform: translate(40px, 30px) scale(1.1)
+            }
+        }
+
+        .glow {
+            position: fixed;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(circle, rgba(139, 108, 255, .18), transparent 65%);
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 30%
+        }
+
+        /* header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: color-mix(in srgb, var(--bg) 78%, transparent);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border)
+        }
+
+        nav,
+        .container {
+            width: min(1100px, 90%);
+            margin: auto
+        }
+
+        nav {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .logo span {
+            background: var(--grad);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent
+        }
+
+        .links {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            position: relative
+        }
+
+        .links a {
+            color: var(--muted);
+            padding: 7px 14px;
+            border-radius: 999px;
+            font-weight: 500;
+            transition: color .2s, background .2s
+        }
+
+        .links a:hover {
+            color: var(--text)
+        }
+
+        .links a.active {
+            color: var(--text);
+            background: color-mix(in srgb, var(--violet) 20%, transparent)
+        }
+
+        .tools {
+            display: flex;
+            align-items: center;
+            gap: 9px
+        }
+
+        .tool,
+        .menu {
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform .2s, border-color .2s
+        }
+
+        .tool:hover {
+            transform: rotate(18deg);
+            border-color: var(--violet)
+        }
+
+        .menu {
+            display: none
+        }
+
+        main {
+            width: min(1100px, 90%);
+            margin: auto
+        }
+
+        /* hero */
+        .hero {
+            min-height: 640px;
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            align-items: center;
+            gap: 50px;
+            padding: 60px 0
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            border-radius: 999px;
+            font-size: 14px;
+            color: var(--muted)
+        }
+
+        .badge i {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 0 0 #4ade8088;
+            animation: pulse 2s infinite
+        }
+
+        @keyframes pulse {
+            70% {
+                box-shadow: 0 0 0 9px #4ade8000
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 #4ade8000
+            }
+        }
+
+        h1 {
+            font-size: clamp(38px, 5.4vw, 66px);
+            line-height: 1.1;
+            margin: 20px 0 10px;
+            font-weight: 800;
+            letter-spacing: -.02em
+        }
+
+        .gradient {
+            background: var(--grad);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-size: 200% 100%;
+            animation: shift 6s linear infinite
+        }
+
+        @keyframes shift {
+            to {
+                background-position: -200% 0
+            }
+        }
+
+        h2 {
+            font-size: 26px;
+            margin-bottom: 12px;
+            font-weight: 700
+        }
+
+        .role {
+            font-size: clamp(20px, 2.6vw, 26px);
+            font-weight: 700;
+            min-height: 1.6em
+        }
+
+        .caret {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--sky);
+            margin-left: 3px;
+            vertical-align: -3px;
+            animation: blink 1s steps(1) infinite
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        p {
+            color: var(--muted);
+            margin: 12px 0;
+            max-width: 62ch
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 26px
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 0;
+            border-radius: 12px;
+            padding: 13px 22px;
+            background: var(--grad);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
+            box-shadow: 0 10px 26px rgba(109, 78, 240, .35)
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 34px rgba(109, 78, 240, .45)
+        }
+
+        .btn.alt {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: var(--text);
+            box-shadow: none
+        }
+
+        .btn.alt:hover {
+            border-color: var(--violet)
+        }
+
+        .tags {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin-top: 26px
+        }
+
+        .tags span {
+            padding: 5px 13px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: transform .2s, border-color .2s
+        }
+
+        .tags span:hover {
+            transform: translateY(-3px);
+            border-color: var(--sky)
+        }
+
+        /* picture */
+        .stage {
+            perspective: 900px;
+            display: grid;
+            place-items: center
+        }
+
+        .picture-frame {
+            width: min(100%, 350px);
+            aspect-ratio: 4/5;
+            border-radius: 28px;
+            position: relative;
+            border: 1px solid var(--border);
+            background: radial-gradient(ellipse at 50% 15%, #7a5cf0, #2b2a6e 55%, #13112d);
+            box-shadow: var(--shadow);
+            transform-style: preserve-3d;
+            transition: transform .15s ease-out;
+            overflow: hidden
+        }
+
+        .picture-frame::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 40%, #ffffff22 50%, transparent 60%);
+            transform: translateX(-120%);
+            animation: sheen 5s ease-in-out infinite
+        }
+
+        @keyframes sheen {
+
+            40%,
+            100% {
+                transform: translateX(120%)
+            }
+        }
+
+        .picture-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            inset: 0
+        }
+
+        .picture-placeholder {
+            height: 100%;
+            display: none;
+            place-items: center;
+            text-align: center;
+            padding: 25px;
+            color: #fff
+        }
+
+        .avatar {
+            font-size: 90px;
+            line-height: 1.4
+        }
+
+        .picture-placeholder strong {
+            display: block;
+            font-size: 20px
+        }
+
+        .picture-placeholder small {
+            color: #d5dcf0
+        }
+
+        .info-card {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: #0d0b1fcc;
+            backdrop-filter: blur(8px);
+            border: 1px solid #ffffff25;
+            color: #fff;
+            z-index: 2
+        }
+
+        .info-card p {
+            margin: 0;
+            font-size: 13px;
+            color: #cfd3f5
+        }
+
+        .chip {
+            position: absolute;
+            padding: 8px 14px;
+            border-radius: 12px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+            animation: bob 5s ease-in-out infinite
+        }
+
+        .chip.c1 {
+            top: 8%;
+            left: -6%
+        }
+
+        .chip.c2 {
+            top: 44%;
+            right: -8%;
+            animation-delay: -2s
+        }
+
+        @keyframes bob {
+            50% {
+                transform: translateY(-10px)
+            }
+        }
+
+        /* stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 30px
+        }
+
+        .stat {
+            padding: 22px;
+            border-radius: 16px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            text-align: center
+        }
+
+        .stat b {
+            display: block;
+            font-size: 34px;
+            font-weight: 800;
+            background: var(--grad);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        /* focus tabs */
+        .section {
+            padding: 35px 0 70px
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 20px 0
+        }
+
+        .tab {
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--muted);
+            padding: 9px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all .2s
+        }
+
+        .tab:hover {
+            color: var(--text);
+            border-color: var(--violet)
+        }
+
+        .tab.on {
+            background: var(--grad);
+            color: #fff;
+            border-color: transparent
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px
+        }
+
+        .card {
+            padding: 24px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            transition: transform .25s, border-color .25s, opacity .3s, box-shadow .25s
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 3px;
+            background: var(--grad);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .35s
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: var(--violet);
+            box-shadow: var(--shadow)
+        }
+
+        .card:hover::before {
+            transform: scaleX(1)
+        }
+
+        .card h3 {
+            margin-bottom: 7px;
+            font-size: 18px
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 15px
+        }
+
+        .card.dim {
+            opacity: .25;
+            transform: scale(.97)
+        }
+
+        .meter {
+            height: 6px;
+            background: var(--bg2);
+            border-radius: 9px;
+            margin-top: 16px;
+            overflow: hidden
+        }
+
+        .meter i {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: var(--grad);
+            border-radius: 9px;
+            transition: width 1.2s cubic-bezier(.2, .8, .2, 1)
+        }
+
+        .card.show .meter i {
+            width: var(--v)
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 26px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .progress-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--grad);
+            z-index: 20
+        }
+
+        #backTop {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--grad);
+            color: #fff;
+            width: 46px;
+            height: 46px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 8;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: opacity .3s, transform .3s
+        }
+
+        #backTop.on {
+            opacity: 1;
+            transform: none;
+            pointer-events: auto
+        }
+
+        /* reveal (JS adds .js to html so content stays visible without it) */
+        .js .reveal {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity .7s, transform .7s
+        }
+
+        .js .reveal.show {
+            opacity: 1;
+            transform: none
+        }
+
+        .js .hero .reveal:nth-child(2) {
+            transition-delay: .12s
+        }
+
+        @media(max-width:850px) {
+            nav {
+                flex-wrap: wrap
+            }
+
+            .menu {
+                display: block
+            }
+
+            .links {
+                display: none;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                padding: 18px 5%;
+                background: var(--bg);
+                flex-direction: column;
+                align-items: stretch;
+                border-bottom: 1px solid var(--border)
+            }
+
+            .links.open {
+                display: flex;
+                animation: drop .25s ease-out
+            }
+
+            @keyframes drop {
+                from {
+                    opacity: 0;
+                    transform: translateY(-8px)
+                }
+            }
+
+            .tools {
+                margin-left: auto
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 40px
+            }
+
+            .picture-frame {
+                max-width: 290px
+            }
+
+            .chip {
+                display: none
+            }
+
+            .cards {
+                grid-template-columns: 1fr
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *:before,
+            *:after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important
+            }
+
+            .js .reveal {
+                opacity: 1;
+                transform: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg">
+        <div class="orb a"></div>
+        <div class="orb b"></div>
+    </div>
+    <div class="glow" id="glow"></div>
+    <div class="progress-top" id="progressTop"></div>
+
+    <header>
+        <nav>
+            <a class="logo" href="index.html">My<span>Portfolio.</span></a>
+            <div class="links" id="navLinks">
+                <a class="active" href="index.html">Home</a>
+                <a href="about.html">About &amp; Skills</a>
+                <a href="projects.html">Projects</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="tools">
+                <button class="tool" id="themeToggle" aria-label="Toggle color theme">☀️</button>
+                <button class="menu" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div>
+                <div class="badge reveal"><i></i><span id="greeting">Welcome to my portfolio</span></div>
+                <h1 class="reveal">Hello, I'm <span class="gradient">Arman Je R. mahinay.</span></h1>
+                <div class="role reveal">I'm a <span class="gradient" id="typing"></span><span class="caret"
+                        aria-hidden="true"></span></div>
+                <p class="reveal">I'm an Information Technology student learning web development, programming, and
+                    software design. I enjoy creating projects, solving problems, and improving my skills through
+                    practice.</p>
+                <div class="actions reveal">
+                    <a class="btn" href="projects.html">Explore my projects ↗</a>
+                    <a class="btn alt" href="about.html">Learn about me</a>
+                </div>
+                <div class="tags reveal">
+                    <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Problem-solving</span></div>
+            </div>
+
+            <div class="stage reveal">
+                <div class="picture-frame" id="tilt">
+                    <img src="images/profile.jpg" alt="Your profile portrait"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+                    <div class="picture-placeholder">
+                        <div>
+                            <div class="avatar">👤</div><strong>Your photo here</strong><small>Replace with your profile
+                                picture</small>
+                        </div>
+                    </div>
+                    <div class="info-card"><strong>Arman Je R. Mahinay</strong>
+                        <p>IT student and aspiring developer</p>
+                    </div>
+                </div>
+                <div class="chip c1">&lt;/&gt; Web</div>
+                <div class="chip c2">✦ Creative</div>
+            </div>
+        </section>
+
+        <section class="stats reveal" aria-label="Highlights">
+            <div class="stat"><b data-to="12">0</b><span>Projects built</span></div>
+            <div class="stat"><b data-to="4">0</b><span>Languages learned</span></div>
+            <div class="stat"><b data-to="300" data-suffix="+">0</b><span>Hours of practice</span></div>
+            <div class="stat"><b data-to="100" data-suffix="%">0</b><span>Curiosity</span></div>
+        </section>
+
+        <section class="section" id="focus">
+            <div class="reveal">
+                <h2>Learning through <span class="gradient">building.</span></h2>
+                <p>Pick an area to see what I'm focusing on.</p>
+                <div class="tabs" role="tablist">
+                    <button class="tab on" data-f="all" role="tab" aria-selected="true">All</button>
+                    <button class="tab" data-f="web" role="tab" aria-selected="false">Web</button>
+                    <button class="tab" data-f="game" role="tab" aria-selected="false">Games</button>
+                    <button class="tab" data-f="tech" role="tab" aria-selected="false">Tech</button>
+                </div>
+            </div>
+            <div class="cards">
+                <article class="card reveal" data-c="web" style="--v:80%">
+                    <h3>💻 Web development</h3>
+                    <p>Practicing how to build responsive websites using HTML, CSS, and JavaScript.</p>
+                    <div class="meter"><i></i></div>
+                </article>
+                <article class="card reveal" data-c="game" style="--v:55%">
+                    <h3>🎮 Game development</h3>
+                    <p>Exploring game mechanics, user interfaces, and interactive experiences.</p>
+                    <div class="meter"><i></i></div>
+                </article>
+                <article class="card reveal" data-c="tech" style="--v:65%">
+                    <h3>⚙️ Technology projects</h3>
+                    <p>Learning programming and exploring software, AI, and IoT concepts.</p>
+                    <div class="meter"><i></i></div>
+                </article>
+            </div>
+            <div class="actions reveal"><a class="btn" href="contact.html">Let's connect →</a></div>
+        </section>
+    </main>
+
+     <footer>© <span class="year"></span> Arman Je R. Mahinay. All rights reserved.</footer>
+    <button id="backTop" aria-label="Back to top">↑</button>
+
+    <script>
+        document.documentElement.classList.add("js");
+        const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+        const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const navLinks = $("#navLinks"), menuToggle = $("#menuToggle"), themeToggle = $("#themeToggle");
+
+        /* mobile menu */
+        const closeMenu = () => { navLinks.classList.remove("open"); menuToggle.setAttribute("aria-expanded", "false"); menuToggle.textContent = "☰"; };
+        menuToggle.addEventListener("click", () => {
+            const open = navLinks.classList.toggle("open");
+            menuToggle.setAttribute("aria-expanded", String(open));
+            menuToggle.textContent = open ? "✕" : "☰";
+        });
+        navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+        addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
+
+        /* theme: saved choice, otherwise system preference */
+        const store = {
+            get: k => { try { return localStorage.getItem(k); } catch { return null; } },
+            set: (k, v) => { try { localStorage.setItem(k, v); } catch { } }
+        };
+        function setTheme(t) {
+            document.body.classList.toggle("light", t === "light");
+            themeToggle.textContent = t === "light" ? "🌙" : "☀️";
+            themeToggle.setAttribute("aria-label", t === "light" ? "Switch to dark theme" : "Switch to light theme");
+        }
+        setTheme(store.get("portfolio-theme") || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+        themeToggle.addEventListener("click", () => {
+            const next = document.body.classList.contains("light") ? "dark" : "light";
+            store.set("portfolio-theme", next); setTheme(next);
+        });
+
+        /* greeting by local time */
+        const h = new Date().getHours();
+        $("#greeting").textContent = h < 12 ? "Good morning, welcome" : h < 18 ? "Good afternoon, welcome" : "Good evening, welcome";
+
+        /* typing animation */
+        const phrases = ["Web Developer", "IT Student", "Creative Learner", "Aspiring Programmer"];
+        const typing = $("#typing");
+        let pi = 0, ci = 0, del = false;
+        function type() {
+            const p = phrases[pi];
+            typing.textContent = p.slice(0, ci);
+            if (!del && ci < p.length) { ci++; setTimeout(type, 90); }
+            else if (!del) { del = true; setTimeout(type, 1200); }
+            else if (ci > 0) { ci--; setTimeout(type, 45); }
+            else { del = false; pi = (pi + 1) % phrases.length; setTimeout(type, 250); }
+        }
+        reduce ? typing.textContent = phrases[0] : type();
+
+        /* reveal on scroll + counters + meters */
+        function count(el) {
+            const to = +el.dataset.to, suf = el.dataset.suffix || "";
+            if (reduce) { el.textContent = to + suf; return; }
+            const t0 = performance.now(), dur = 1400;
+            (function step(t) {
+                const k = Math.min((t - t0) / dur, 1);
+                el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))) + suf;
+                if (k < 1) requestAnimationFrame(step);
+            })(t0);
+        }
+        const io = new IntersectionObserver(entries => entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.classList.add("show");
+            e.target.querySelectorAll("[data-to]").forEach(count);
+            io.unobserve(e.target);
+        }), { threshold: .2 });
+        $$(".reveal").forEach(el => io.observe(el));
+
+        /* focus filter */
+        $$(".tab").forEach(tab => tab.addEventListener("click", () => {
+            $$(".tab").forEach(t => { t.classList.toggle("on", t === tab); t.setAttribute("aria-selected", String(t === tab)); });
+            const f = tab.dataset.f;
+            $$(".card").forEach(c => c.classList.toggle("dim", f !== "all" && c.dataset.c !== f));
+        }));
+
+        /* 3D tilt on the portrait and soft cursor glow (pointer devices only) */
+        const frame = $("#tilt"), glow = $("#glow");
+        if (!reduce && matchMedia("(hover:hover)").matches) {
+            frame.addEventListener("mousemove", e => {
+                const r = frame.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+                frame.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 14}deg)`;
+            });
+            frame.addEventListener("mouseleave", () => frame.style.transform = "");
+            addEventListener("mousemove", e => { glow.style.left = e.clientX + "px"; glow.style.top = e.clientY + "px"; }, { passive: true });
+        }
+
+        /* scroll progress and back-to-top */
+        const backTop = $("#backTop");
+        addEventListener("scroll", () => {
+            const max = document.documentElement.scrollHeight - innerHeight;
+            $("#progressTop").style.width = (max > 0 ? scrollY / max * 100 : 0) + "%";
+            backTop.classList.toggle("on", scrollY > 350);
+        }, { passive: true });
+        backTop.addEventListener("click", () => scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }));
+        $(".year").textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>

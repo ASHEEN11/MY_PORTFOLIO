@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Projects | My Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0b1f;
+            --bg2: #141230;
+            --panel: #1a1740;
+            --text: #f2f1ff;
+            --muted: #a9a8cc;
+            --violet: #8b6cff;
+            --sky: #6cc7ff;
+            --border: #2c2862;
+            --grad: linear-gradient(110deg, var(--violet), var(--sky));
+            --shadow: 0 18px 50px rgba(20, 10, 80, .45);
+        }
+
+        body.light {
+            --bg: #f5f4ff;
+            --bg2: #eceaff;
+            --panel: #ffffff;
+            --text: #1b1840;
+            --muted: #5d5b85;
+            --violet: #6d4ef0;
+            --sky: #1f9be0;
+            --border: #dcd8f7;
+            --shadow: 0 18px 40px rgba(90, 70, 200, .14);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px
+        }
+
+        body {
+            font: 16px/1.7 "Plus Jakarta Sans", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background .3s, color .3s;
+            overflow-x: hidden
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button,
+        input,
+        select {
+            font: inherit
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--sky);
+            outline-offset: 3px;
+            border-radius: 6px
+        }
+
+        .bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .33;
+            animation: float 16s ease-in-out infinite
+        }
+
+        .orb.a {
+            width: 420px;
+            height: 420px;
+            background: var(--violet);
+            top: -120px;
+            left: -100px
+        }
+
+        .orb.b {
+            width: 380px;
+            height: 380px;
+            background: var(--sky);
+            bottom: -120px;
+            right: -80px;
+            animation-delay: -8s;
+            opacity: .26
+        }
+
+        body.light .orb {
+            opacity: .2
+        }
+
+        @keyframes float {
+            50% {
+                transform: translate(40px, 30px) scale(1.1)
+            }
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: color-mix(in srgb, var(--bg) 78%, transparent);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border)
+        }
+
+        nav,
+        main {
+            width: min(1100px, 90%);
+            margin: auto
+        }
+
+        nav {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            white-space: nowrap
+        }
+
+        .logo span,
+        .gradient {
+            background: var(--grad);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent
+        }
+
+        .gradient {
+            background-size: 200% 100%;
+            animation: shift 6s linear infinite
+        }
+
+        @keyframes shift {
+            to {
+                background-position: -200% 0
+            }
+        }
+
+        .links {
+            display: flex;
+            gap: 6px;
+            align-items: center
+        }
+
+        .links a {
+            color: var(--muted);
+            padding: 7px 14px;
+            border-radius: 999px;
+            font-weight: 500;
+            transition: color .2s, background .2s
+        }
+
+        .links a:hover {
+            color: var(--text)
+        }
+
+        .links a.active {
+            color: var(--text);
+            background: color-mix(in srgb, var(--violet) 20%, transparent)
+        }
+
+        .tools {
+            display: flex;
+            gap: 9px
+        }
+
+        .tool,
+        .menu {
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform .2s, border-color .2s
+        }
+
+        .tool:hover {
+            transform: rotate(18deg);
+            border-color: var(--violet)
+        }
+
+        .menu {
+            display: none
+        }
+
+        main {
+            padding: 60px 0 80px
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            border-radius: 999px;
+            font-size: 14px;
+            color: var(--muted)
+        }
+
+        h1 {
+            font-size: clamp(36px, 5vw, 56px);
+            line-height: 1.1;
+            margin: 18px 0 12px;
+            font-weight: 800;
+            letter-spacing: -.02em
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 700
+        }
+
+        p {
+            color: var(--muted);
+            margin: 10px 0
+        }
+
+        /* toolbar */
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 26px 0 16px
+        }
+
+        .searchbox {
+            position: relative;
+            flex: 1 1 320px
+        }
+
+        .search {
+            width: 100%;
+            padding: 14px 84px 14px 44px;
+            background: var(--panel);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s
+        }
+
+        .search:focus {
+            border-color: var(--violet);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--violet) 22%, transparent)
+        }
+
+        .searchbox .ico {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            pointer-events: none
+        }
+
+        .searchbox kbd {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font: 12px "Plus Jakarta Sans", sans-serif;
+            padding: 2px 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--muted);
+            background: var(--bg2)
+        }
+
+        .clear {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 0;
+            background: var(--bg2);
+            color: var(--text);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none
+        }
+
+        .searchbox.has .clear {
+            display: block
+        }
+
+        .searchbox.has kbd {
+            display: none
+        }
+
+        .sort {
+            padding: 0 14px;
+            background: var(--panel);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            min-height: 48px
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-bottom: 10px
+        }
+
+        .filter {
+            padding: 9px 16px;
+            background: var(--panel);
+            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all .2s
+        }
+
+        .filter b {
+            margin-left: 6px;
+            font-size: 12px;
+            padding: 1px 8px;
+            border-radius: 999px;
+            background: var(--bg2)
+        }
+
+        .filter:hover {
+            color: var(--text);
+            border-color: var(--violet)
+        }
+
+        .filter.active {
+            background: var(--grad);
+            color: #fff;
+            border-color: transparent
+        }
+
+        .filter.active b {
+            background: #ffffff33
+        }
+
+        .count {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 6px 0 22px;
+            min-height: 24px
+        }
+
+        /* cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            transition: transform .25s, border-color .25s, box-shadow .25s
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .3s;
+            background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--violet) 20%, transparent), transparent 60%)
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: var(--violet);
+            box-shadow: var(--shadow)
+        }
+
+        .card:hover::after {
+            opacity: 1
+        }
+
+        .card.in {
+            animation: pop .45s cubic-bezier(.2, .8, .2, 1) both
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: translateY(18px) scale(.97)
+            }
+        }
+
+        .card[hidden] {
+            display: none
+        }
+
+        .picture {
+            height: 210px;
+            position: relative;
+            overflow: hidden;
+            background: var(--pbg, radial-gradient(ellipse at bottom, #51418c, #192943 70%));
+            display: grid;
+            place-items: center;
+            color: #fff
+        }
+
+        .picture img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .6s
+        }
+
+        .card:hover .picture img {
+            transform: scale(1.07)
+        }
+
+        .placeholder {
+            text-align: center;
+            display: none;
+            padding: 20px
+        }
+
+        .placeholder span {
+            font-size: 54px;
+            display: block;
+            transition: transform .4s
+        }
+
+        .card:hover .placeholder span {
+            transform: scale(1.15) rotate(-6deg)
+        }
+
+        .placeholder small {
+            color: #dce1f5
+        }
+
+        .picture-label {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #0d0b1fcc;
+            color: #fff;
+            padding: 5px 11px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 500;
+            backdrop-filter: blur(6px)
+        }
+
+        .details {
+            padding: 22px 24px 24px
+        }
+
+        .type {
+            color: var(--sky);
+            font-size: 13px;
+            font-weight: 700
+        }
+
+        .details h2 {
+            margin-top: 2px
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin: 14px 0
+        }
+
+        .tags span {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 3px 10px;
+            font-size: 12px;
+            font-weight: 500
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px
+        }
+
+        .btn {
+            border: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: var(--grad);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
+            box-shadow: 0 8px 20px rgba(109, 78, 240, .3)
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(109, 78, 240, .42)
+        }
+
+        .btn.alt {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            box-shadow: none
+        }
+
+        .btn.alt:hover {
+            border-color: var(--violet)
+        }
+
+        .empty {
+            display: none;
+            padding: 40px;
+            text-align: center;
+            background: var(--panel);
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            color: var(--muted)
+        }
+
+        .empty button {
+            margin-top: 12px
+        }
+
+        /* dialog */
+        dialog {
+            width: min(560px, 92%);
+            margin: auto;
+            padding: 28px;
+            background: var(--panel);
+            color: var(--text);
+            border: 1px solid var(--violet);
+            border-radius: 20px;
+            box-shadow: var(--shadow)
+        }
+
+        dialog[open] {
+            animation: dlg .3s cubic-bezier(.2, .8, .2, 1)
+        }
+
+        @keyframes dlg {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(.96)
+            }
+        }
+
+        dialog::backdrop {
+            background: #080616cc;
+            backdrop-filter: blur(4px)
+        }
+
+        dialog p {
+            white-space: pre-line
+        }
+
+        .dtop {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px
+        }
+
+        .close {
+            background: var(--bg2);
+            color: var(--text);
+            border: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer
+        }
+
+        .dnav {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap
+        }
+
+        footer {
+            text-align: center;
+            padding: 26px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .progress-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--grad);
+            z-index: 20
+        }
+
+        mark {
+            background: color-mix(in srgb, var(--sky) 35%, transparent);
+            color: inherit;
+            border-radius: 3px;
+            padding: 0 2px
+        }
+
+        @media(max-width:850px) {
+            nav {
+                flex-wrap: wrap
+            }
+
+            .menu {
+                display: block
+            }
+
+            .links {
+                display: none;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: var(--bg);
+                padding: 18px 5%;
+                flex-direction: column;
+                align-items: stretch;
+                border-bottom: 1px solid var(--border)
+            }
+
+            .links.open {
+                display: flex;
+                animation: drop .25s ease-out
+            }
+
+            @keyframes drop {
+                from {
+                    opacity: 0;
+                    transform: translateY(-8px)
+                }
+            }
+
+            .tools {
+                margin-left: auto
+            }
+
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .searchbox kbd {
+                display: none
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *:before,
+            *:after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg">
+        <div class="orb a"></div>
+        <div class="orb b"></div>
+    </div>
+    <div class="progress-top" id="progressTop"></div>
+
+    <header>
+        <nav>
+            <a class="logo" href="index.html">My<span>Portfolio.</span></a>
+            <div class="links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="about.html">About &amp; Skills</a>
+                <a class="active" href="projects.html">Projects</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="tools">
+                <button class="tool" id="themeToggle" aria-label="Toggle theme">☀️</button>
+                <button class="menu" id="menuToggle" aria-expanded="false" aria-label="Open navigation">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <span class="badge">Things I've been building</span>
+        <h1>My <span class="gradient">projects.</span></h1>
+        <p>Search my work or pick a category to explore the projects and technologies I'm learning.</p>
+
+        <div class="toolbar">
+            <div class="searchbox" id="searchbox">
+                <span class="ico" aria-hidden="true">🔍</span>
+                <input class="search" id="search" type="search" placeholder="Search projects or technologies..."
+                    aria-label="Search projects" autocomplete="off">
+                <kbd>/</kbd>
+                <button class="clear" id="clear" type="button" aria-label="Clear search">×</button>
+            </div>
+            <select class="sort" id="sort" aria-label="Sort projects">
+                <option value="default">Sort: Featured</option>
+                <option value="az">Sort: A to Z</option>
+                <option value="za">Sort: Z to A</option>
+            </select>
+        </div>
+
+        <div class="filters" id="filters">
+            <button class="filter active" data-filter="all">All projects <b>0</b></button>
+            <button class="filter" data-filter="game">Game development <b>0</b></button>
+            <button class="filter" data-filter="web">Web development <b>0</b></button>
+            <button class="filter" data-filter="iot">AI &amp; IoT <b>0</b></button>
+        </div>
+        <div class="count" id="count" aria-live="polite"></div>
+
+        <div class="grid" id="projectGrid">
+            <article class="card" data-category="game" data-search="darkroot survival horror godot gdscript 3d island">
+                <div class="picture">
+                    <img src="images/darkroot.jpg" alt="Darkroot game screenshot"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                    <div class="placeholder"><span>🌲</span><strong>Darkroot screenshot</strong><br><small>Add
+                            images/darkroot.jpg</small></div>
+                    <span class="picture-label">Game development</span>
+                </div>
+                <div class="details">
+                    <div class="type">Game development</div>
+                    <h2>Darkroot</h2>
+                    <p>A pixelated 3D survival horror game concept featuring island exploration, survival mechanics, and
+                        inventory systems.</p>
+                    <div class="tags"><span>Godot</span><span>GDScript</span><span>3D</span></div>
+                    <div class="buttons">
+                        <button class="btn details-btn" data-title="Darkroot"
+                            data-info="A survival horror game concept set on a mysterious island.\nTechnologies: Godot and GDScript.\nContribution: Update this text to describe the gameplay systems you personally implemented.">View
+                            details</button>
+                        <a class="btn alt" href="https://github.com/" target="_blank" rel="noopener noreferrer">Project
+                            link ↗</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-category="web"
+                data-search="pinoy fighter browser fighting game javascript phaser">
+                <div class="picture" style="--pbg:radial-gradient(ellipse at bottom,#873b65,#202043)">
+                    <img src="images/pinoyfighter.jpg" alt="Pinoy Fighter screenshot"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                    <div class="placeholder"><span>⚔️</span><strong>Pinoy Fighter screenshot</strong><br><small>Add
+                            images/pinoy-fighter.jpg</small></div>
+                    <span class="picture-label">Web game</span>
+                </div>
+                <div class="details">
+                    <div class="type">Web game development</div>
+                    <h2>Pinoy Fighter</h2>
+                    <p>A browser fighting game project exploring character selection, keyboard controls, scenes, and
+                        combat mechanics.</p>
+                    <div class="tags"><span>JavaScript</span><span>Phaser</span><span>Vite</span></div>
+                    <div class="buttons">
+                        <button class="btn details-btn" data-title="Pinoy Fighter"
+                            data-info="A browser-based fighting game.\nTechnologies: JavaScript and Phaser.\nContribution: Replace with the game features you actually implemented.">View
+                            details</button>
+                        <a class="btn alt" href="https://the-pinoy-fighter-games.onrender.com/" target="_blank" rel="noopener noreferrer">Project
+                            link ↗</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-category="iot"
+                data-search="hydropendroid ai iot automated cleaning water efficient piggery">
+                <div class="picture" style="--pbg:radial-gradient(ellipse at bottom,#176e83,#16344d)">
+                    <img src="images/hydropendroid.jpg" alt="HydroPenDroid project screenshot"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                    <div class="placeholder"><span>💧</span><strong>HydroPenDroid image</strong><br><small>Add
+                            images/hydropendroid.jpg</small></div>
+                    <span class="picture-label">AI &amp; IoT</span>
+                </div>
+                <div class="details">
+                    <div class="type">Capstone project</div>
+                    <h2>HydroPenDroid</h2>
+                    <p>An AI-driven IoT system concept for targeted, water-efficient automated cleaning in piggeries.
+                    </p>
+                    <div class="tags"><span>AI</span><span>IoT</span><span>Automation</span></div>
+                    <div class="buttons">
+                        <button class="btn details-btn" data-title="HydroPenDroid"
+                            data-info="An AI and IoT system for targeted, water-efficient piggery cleaning.\nTechnologies: Update with the actual software and hardware used.\nContribution: Specify your personal role in the project.">View
+                            details</button>
+                        <a class="btn alt" href="https://github.com/" target="_blank" rel="noopener noreferrer">Project
+                            link ↗</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card" data-category="web" data-search="portfolio html css javascript responsive website">
+                <div class="picture" style="--pbg:radial-gradient(ellipse at bottom,#51418c,#192943)">
+                    <img src="images/portfolio.jpg" alt="Portfolio website screenshot"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                    <div class="placeholder"><span>💻</span><strong>Portfolio screenshot</strong><br><small>Add
+                            images/portfolio.jpg</small></div>
+                    <span class="picture-label">Web development</span>
+                </div>
+                <div class="details">
+                    <div class="type">Web development</div>
+                    <h2>Personal Portfolio</h2>
+                    <p>A responsive four-page website with navigation, project information, skills, and contact details.
+                    </p>
+                    <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+                    <div class="buttons">
+                        <button class="btn details-btn" data-title="Personal Portfolio"
+                            data-info="A responsive personal website with four connected pages.\nTechnologies: HTML, internal CSS, and internal JavaScript.\nContribution: Designed and implemented the website.">View
+                            details</button>
+                        <a class="btn alt" href="index.html">View home ↗</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="empty" id="empty">
+            <div>No projects match your search. Try another keyword or category.</div>
+            <button class="btn" id="reset" type="button">Reset filters</button>
+        </div>
+    </main>
+
+    <dialog id="detailsDialog" aria-labelledby="dialogTitle">
+        <div class="dtop">
+            <h2 id="dialogTitle"></h2><button class="close" id="closeDialog" aria-label="Close details">×</button>
+        </div>
+        <div class="tags" id="dialogTags"></div>
+        <p id="dialogInfo"></p>
+        <div class="dnav">
+            <button class="btn alt" id="prevP" type="button">← Previous</button>
+            <button class="btn alt" id="nextP" type="button">Next →</button>
+            <button class="btn" id="dialogDone" type="button">Close</button>
+        </div>
+    </dialog>
+
+     <footer>© <span class="year"></span> Arman Je R. Mahinay. All rights reserved.</footer>
+
+    <script>
+        const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+        const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const nav = $("#navLinks"), menu = $("#menuToggle"), theme = $("#themeToggle");
+
+        /* mobile menu */
+        const closeMenu = () => { nav.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); menu.textContent = "☰"; };
+        menu.addEventListener("click", () => { const o = nav.classList.toggle("open"); menu.setAttribute("aria-expanded", String(o)); menu.textContent = o ? "✕" : "☰"; });
+        nav.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+
+        /* theme (saved choice, else system preference) */
+        const store = {
+            get: k => { try { return localStorage.getItem(k); } catch { return null; } },
+            set: (k, v) => { try { localStorage.setItem(k, v); } catch { } }
+        };
+        function applyTheme(t) {
+            document.body.classList.toggle("light", t === "light");
+            theme.textContent = t === "light" ? "🌙" : "☀️";
+            theme.setAttribute("aria-label", t === "light" ? "Switch to dark theme" : "Switch to light theme");
+        }
+        applyTheme(store.get("portfolio-theme") || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+        theme.addEventListener("click", () => {
+            const t = document.body.classList.contains("light") ? "dark" : "light";
+            store.set("portfolio-theme", t); applyTheme(t);
+        });
+
+        /* data */
+        const grid = $("#projectGrid"), search = $("#search");
+        const cards = $$(".card");
+        cards.forEach((c, i) => c.dataset.order = i);
+        let category = "all", shown = new Set();
+
+        /* category counts on the filter buttons */
+        $$(".filter").forEach(b => {
+            const f = b.dataset.filter;
+            b.querySelector("b").textContent = f === "all" ? cards.length : cards.filter(c => c.dataset.category === f).length;
+        });
+
+        /* search, category and sort work together */
+        function filterProjects() {
+            const q = search.value.trim().toLowerCase();
+            $("#searchbox").classList.toggle("has", q.length > 0);
+            const sort = $("#sort").value;
+            const title = c => c.querySelector("h2").textContent.toLowerCase();
+            [...cards].sort((a, b) =>
+                sort === "az" ? title(a).localeCompare(title(b)) :
+                    sort === "za" ? title(b).localeCompare(title(a)) : a.dataset.order - b.dataset.order
+            ).forEach(c => grid.appendChild(c));
+
+            let visible = 0;
+            cards.forEach(card => {
+                const okCat = category === "all" || card.dataset.category === category;
+                const okSearch = (card.dataset.search + " " + card.innerText).toLowerCase().includes(q);
+                const show = okCat && okSearch;
+                const wasShown = shown.has(card);
+                card.hidden = !show;
+                if (show) {
+                    visible++; shown.add(card);
+                    if (!wasShown && !reduce) { card.classList.remove("in"); void card.offsetWidth; card.classList.add("in"); }
+                } else shown.delete(card);
+            });
+            $("#empty").style.display = visible ? "none" : "block";
+            $("#count").textContent = visible
+                ? `Showing ${visible} of ${cards.length} project${cards.length > 1 ? "s" : ""}` + (q ? ` for "${search.value.trim()}"` : "")
+                : "";
+        }
+        cards.forEach(c => shown.add(c));
+        search.addEventListener("input", filterProjects);
+        $("#sort").addEventListener("change", filterProjects);
+        $$(".filter").forEach(btn => btn.addEventListener("click", () => {
+            category = btn.dataset.filter;
+            $$(".filter").forEach(b => b.classList.toggle("active", b === btn));
+            filterProjects();
+        }));
+        $("#clear").addEventListener("click", () => { search.value = ""; filterProjects(); search.focus(); });
+        function resetAll() {
+            search.value = ""; category = "all"; $("#sort").value = "default";
+            $$(".filter").forEach(b => b.classList.toggle("active", b.dataset.filter === "all"));
+            filterProjects();
+        }
+        $("#reset").addEventListener("click", resetAll);
+        filterProjects();
+
+        /* keyboard: "/" focuses search, Esc clears it or closes the menu */
+        addEventListener("keydown", e => {
+            const typing = /input|textarea|select/i.test(document.activeElement.tagName);
+            if (e.key === "/" && !typing) { e.preventDefault(); search.focus(); }
+            if (e.key === "Escape") { closeMenu(); if (document.activeElement === search && search.value) { search.value = ""; filterProjects(); } }
+        });
+
+        /* spotlight that follows the pointer on each card */
+        cards.forEach(c => c.addEventListener("pointermove", e => {
+            const r = c.getBoundingClientRect();
+            c.style.setProperty("--mx", (e.clientX - r.left) + "px");
+            c.style.setProperty("--my", (e.clientY - r.top) + "px");
+        }));
+
+        /* details dialog with previous and next */
+        const dialog = $("#detailsDialog");
+        let current = null;
+        const visibleCards = () => cards.filter(c => !c.hidden);
+        function openDetails(card) {
+            current = card;
+            const btn = card.querySelector(".details-btn");
+            $("#dialogTitle").textContent = btn.dataset.title;
+            $("#dialogInfo").textContent = btn.dataset.info.replace(/\\n/g, "\n");
+            $("#dialogTags").innerHTML = card.querySelector(".tags").innerHTML;
+            const many = visibleCards().length > 1;
+            $("#prevP").style.display = $("#nextP").style.display = many ? "" : "none";
+            if (!dialog.open) {
+                if (typeof dialog.showModal === "function") dialog.showModal();
+                else alert(btn.dataset.title + "\n\n" + btn.dataset.info.replace(/\\n/g, "\n"));
+            }
+        }
+        function step(d) {
+            const list = visibleCards(), i = list.indexOf(current);
+            openDetails(list[(i + d + list.length) % list.length]);
+        }
+        $$(".details-btn").forEach(b => b.addEventListener("click", () => openDetails(b.closest(".card"))));
+        $("#prevP").addEventListener("click", () => step(-1));
+        $("#nextP").addEventListener("click", () => step(1));
+        $("#closeDialog").addEventListener("click", () => dialog.close());
+        $("#dialogDone").addEventListener("click", () => dialog.close());
+        dialog.addEventListener("click", e => { if (e.target === dialog) dialog.close(); });
+        dialog.addEventListener("keydown", e => {
+            if (e.key === "ArrowRight") step(1);
+            if (e.key === "ArrowLeft") step(-1);
+        });
+
+        /* scroll progress */
+        addEventListener("scroll", () => {
+            const max = document.documentElement.scrollHeight - innerHeight;
+            $("#progressTop").style.width = (max > 0 ? scrollY / max * 100 : 0) + "%";
+        }, { passive: true });
+        $(".year").textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
